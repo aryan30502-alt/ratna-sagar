@@ -24,6 +24,7 @@ export default function SmartImage({ src, alt, className, fallback }: Props) {
       alt={alt}
       loading="lazy"
       decoding="async"
+      referrerPolicy="no-referrer"
       onError={() => setFailed(true)}
       className={className}
     />

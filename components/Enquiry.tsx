@@ -4,90 +4,174 @@ import { MessageCircle, Phone, MapPin, Mail, Send } from "lucide-react";
 import { useState } from "react";
 import { BRAND, waLink } from "@/lib/data";
 
-const easing = [0.2, 0.8, 0.2, 1] as const;
+const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function Enquiry() {
-  const [form, setForm] = useState({ name: "", phone: "", product: "", message: "" });
+  const [form, setForm] = useState({ name: "", phone: "", whatsapp: "", city: "", product: "", message: "" });
+  const [submitted, setSubmitted] = useState(false);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    const msg = `Namaste, I have an enquiry.\n• Name: ${form.name}\n• Phone: ${form.phone}\n• Interest: ${form.product}\n• Message: ${form.message}`;
+    const msg =
+      `Namaste, I am interested in jewellery at Gaytri Gold.\n\n` +
+      `• Name: ${form.name}\n` +
+      `• Phone: ${form.phone}\n` +
+      `• WhatsApp: ${form.whatsapp || form.phone}\n` +
+      `• City: ${form.city}\n` +
+      `• Interested in: ${form.product}\n` +
+      `• Message: ${form.message}`;
     window.open(waLink(msg), "_blank");
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 4000);
   };
 
   const update = (k: keyof typeof form) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
       setForm({ ...form, [k]: e.target.value });
 
   return (
-    <section id="enquiry" className="relative overflow-hidden section-dark py-24 sm:py-28">
-      <div className="absolute inset-0 hero-glow opacity-70" />
-      <div className="container-luxe relative grid gap-10 md:grid-cols-12">
+    <section
+      id="enquiry"
+      className="relative overflow-hidden py-24 sm:py-32"
+      style={{ background: "var(--cream-200)" }}
+    >
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(55% 55% at 68% 30%, rgba(201,165,90,0.08), transparent 70%)"
+        }}
+      />
+
+      <div className="container-luxe relative grid gap-14 md:grid-cols-12">
+        {/* Info */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: easing }}
+          transition={{ duration: 1, ease }}
           className="md:col-span-5"
         >
-          <div className="eyebrow-dark">Begin the Conversation</div>
-          <h2 className="mt-5 heading-display text-4xl leading-tight text-ivory-50 sm:text-5xl">
-            A <span className="shimmer-text">personalised consultation</span> awaits you.
+          <div className="eyebrow">Make an Enquiry</div>
+          <h2
+            className="mt-7 heading-display"
+            style={{
+              fontSize: "clamp(30px, 5vw, 50px)",
+              letterSpacing: "-0.025em",
+              lineHeight: 1.05,
+              color: "var(--charcoal-900)"
+            }}
+          >
+            Your dream jewellery{" "}
+            <span className="shimmer-text">awaits you.</span>
           </h2>
-          <p className="mt-5 max-w-md text-ivory-200/80">
-            Share a few details and our experts will guide you to the right gemstone, ritual or
-            spiritual remedy — with patience and precision.
+          <p
+            className="mt-7 max-w-md text-[15px] leading-[1.85]"
+            style={{ fontWeight: 300, color: "var(--charcoal-500)" }}
+          >
+            Share a few details about what you are looking for — whether it is a bridal set, a
+            solitaire, a custom design, or a gift. Our team will reach out to you personally within
+            working hours.
           </p>
 
-          <div className="mt-8 space-y-4">
-            <Info icon={<Phone className="h-4 w-4" />} label="Call" value={BRAND.phone}
-              href={`tel:${BRAND.phone.replace(/\s/g, "")}`} />
-            <Info icon={<MessageCircle className="h-4 w-4" />} label="WhatsApp" value={BRAND.phone}
-              href={waLink("Namaste, I would like a consultation.")} />
-            <Info icon={<Mail className="h-4 w-4" />} label="Email" value={BRAND.email}
-              href={`mailto:${BRAND.email}`} />
-            <Info icon={<MapPin className="h-4 w-4" />} label="Visit" value={BRAND.address} />
+          <div className="mt-10 space-y-3">
+            <InfoRow
+              icon={<Phone className="h-4 w-4" />}
+              label="Call"
+              value={BRAND.phone}
+              href={`tel:${BRAND.phone.replace(/\s/g, "")}`}
+            />
+            <InfoRow
+              icon={<MessageCircle className="h-4 w-4" />}
+              label="WhatsApp"
+              value={BRAND.phone}
+              href={waLink("Namaste, I would like to enquire about jewellery at Gaytri Gold.")}
+            />
+            <InfoRow
+              icon={<Mail className="h-4 w-4" />}
+              label="Email"
+              value={BRAND.email}
+              href={`mailto:${BRAND.email}`}
+            />
+            <InfoRow
+              icon={<MapPin className="h-4 w-4" />}
+              label="Visit Us"
+              value={BRAND.address}
+            />
           </div>
+
+          {/* Quick WhatsApp CTA */}
+          <a
+            href={waLink("Namaste! I would like to enquire about jewellery at Gaytri Gold.")}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-gold mt-9 inline-flex"
+          >
+            <MessageCircle className="h-4 w-4" />
+            Quick WhatsApp Enquiry
+          </a>
         </motion.div>
 
+        {/* Form */}
         <motion.form
           onSubmit={submit}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 24, filter: "blur(3px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true }}
-          transition={{ duration: 0.9, ease: easing, delay: 0.1 }}
-          className="md:col-span-7 rounded-3xl glass-dark p-7 sm:p-10"
+          transition={{ duration: 1, ease, delay: 0.12 }}
+          className="md:col-span-7 rounded-3xl p-8 sm:p-10"
+          style={{
+            background: "rgba(255,255,255,0.7)",
+            border: "1px solid rgba(176,141,74,0.12)",
+            backdropFilter: "blur(12px)",
+            boxShadow: "0 25px 60px -20px rgba(26,22,18,0.06)"
+          }}
         >
-          <h3 className="heading-display text-2xl text-ivory-50">Enquiry Form</h3>
-          <p className="mt-1 text-xs uppercase tracking-[0.28em] text-gold-200/70">
-            Replies within working hours
+          <h3
+            className="heading-display text-[26px]"
+            style={{ color: "var(--charcoal-900)" }}
+          >
+            Jewellery Enquiry Form
+          </h3>
+          <p
+            className="mt-1.5 text-[10px] uppercase"
+            style={{ letterSpacing: "0.32em", color: "var(--gold-accent)", opacity: 0.65 }}
+          >
+            Response within working hours
           </p>
 
-          <div className="mt-7 grid gap-5 sm:grid-cols-2">
+          <div className="mt-8 grid gap-5 sm:grid-cols-2">
             <Field label="Full Name" value={form.name} onChange={update("name")} required />
-            <Field label="Phone / WhatsApp" value={form.phone} onChange={update("phone")} required type="tel" />
+            <Field label="Phone Number" value={form.phone} onChange={update("phone")} required type="tel" />
+            <Field label="WhatsApp Number" value={form.whatsapp} onChange={update("whatsapp")} type="tel" placeholder="If different from phone" />
+            <Field label="City" value={form.city} onChange={update("city")} placeholder="e.g. Jaipur, Udaipur" />
             <Field
-              label="Interested Product"
+              label="Interested In"
               value={form.product}
               onChange={update("product")}
-              placeholder="e.g. Yellow Sapphire, Rudraksha"
+              placeholder="e.g. Bridal Set, Diamond Ring, Gold Bangles"
               className="sm:col-span-2"
             />
             <Field
-              label="Message"
+              label="Additional Message"
               value={form.message}
               onChange={update("message")}
               textarea
               className="sm:col-span-2"
+              placeholder="Any specific design, occasion, budget range..."
             />
           </div>
 
-          <button type="submit" className="btn-gold mt-7 w-full sm:w-auto">
-            <Send className="h-4 w-4" /> Send via WhatsApp
+          <button
+            type="submit"
+            className="btn-gold mt-8 w-full sm:w-auto"
+          >
+            {submitted ? "✓ Sent!" : <><Send className="h-4 w-4" /> Send via WhatsApp</>}
           </button>
 
-          <p className="mt-4 text-[11px] text-ivory-200/60">
-            Your enquiry will open a pre-filled WhatsApp message — no data is stored.
+          <p className="mt-4 text-[11px]" style={{ color: "var(--charcoal-500)", opacity: 0.55 }}>
+            This will open a pre-filled WhatsApp message to our team. No data is stored on this
+            form.
           </p>
         </motion.form>
       </div>
@@ -95,19 +179,51 @@ export default function Enquiry() {
   );
 }
 
-function Info({ icon, label, value, href }: { icon: React.ReactNode; label: string; value: string; href?: string }) {
+function InfoRow({
+  icon,
+  label,
+  value,
+  href
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  href?: string;
+}) {
   const inner = (
-    <div className="group flex items-center gap-4 rounded-2xl border border-gold-300/20 bg-white/[0.03] p-4 transition-all hover:border-gold-300/55 hover:bg-white/[0.06]">
-      <div className="grid h-10 w-10 place-items-center rounded-full bg-gold-gradient text-ink-900">
+    <div
+      className="group flex items-center gap-4 rounded-2xl p-3.5 transition-all duration-500 hover:bg-white/60"
+      style={{ border: "1px solid rgba(176,141,74,0.1)" }}
+    >
+      <div
+        className="grid h-9 w-9 shrink-0 place-items-center rounded-full"
+        style={{
+          background: "linear-gradient(135deg, var(--gold-warm), var(--gold-accent))",
+          color: "var(--cream-50)"
+        }}
+      >
         {icon}
       </div>
       <div>
-        <div className="text-[10px] uppercase tracking-[0.28em] text-gold-200/70">{label}</div>
-        <div className="text-sm text-ivory-100">{value}</div>
+        <div
+          className="text-[9px] uppercase"
+          style={{ letterSpacing: "0.32em", color: "var(--gold-accent)", opacity: 0.6 }}
+        >
+          {label}
+        </div>
+        <div className="text-[13.5px]" style={{ color: "var(--charcoal-800)" }}>
+          {value}
+        </div>
       </div>
     </div>
   );
-  return href ? <a href={href} target="_blank" rel="noreferrer">{inner}</a> : inner;
+  return href ? (
+    <a href={href} target="_blank" rel="noreferrer">
+      {inner}
+    </a>
+  ) : (
+    inner
+  );
 }
 
 function Field({
@@ -129,11 +245,19 @@ function Field({
   textarea?: boolean;
   className?: string;
 }) {
-  const cls =
-    "w-full rounded-xl border border-gold-300/25 bg-white/[0.04] px-4 py-3 text-sm text-ivory-50 placeholder:text-ivory-200/40 outline-none transition-all focus:border-gold-300/70 focus:bg-white/[0.07]";
+  const base =
+    "w-full rounded-xl px-4 py-3.5 text-[13.5px] outline-none transition-all duration-500";
+  const fieldStyle = {
+    border: "1px solid rgba(176,141,74,0.15)",
+    background: "rgba(255,255,255,0.5)",
+    color: "var(--charcoal-900)"
+  };
   return (
     <label className={`block ${className}`}>
-      <span className="mb-2 block text-[10px] uppercase tracking-[0.28em] text-gold-200/70">
+      <span
+        className="mb-2 block text-[9px] uppercase"
+        style={{ letterSpacing: "0.32em", color: "var(--gold-accent)", opacity: 0.6 }}
+      >
         {label}
         {required && " *"}
       </span>
@@ -143,8 +267,8 @@ function Field({
           value={value}
           onChange={onChange}
           placeholder={placeholder}
-          required={required}
-          className={cls}
+          className={base}
+          style={fieldStyle}
         />
       ) : (
         <input
@@ -153,7 +277,8 @@ function Field({
           onChange={onChange}
           placeholder={placeholder}
           required={required}
-          className={cls}
+          className={base}
+          style={fieldStyle}
         />
       )}
     </label>

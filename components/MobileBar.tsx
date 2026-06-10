@@ -1,41 +1,55 @@
 "use client";
-import { MessageCircle, Phone, Send } from "lucide-react";
+import { MessageCircle, Phone, Grid } from "lucide-react";
 import { BRAND, waLink } from "@/lib/data";
 
 export default function MobileBar() {
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden">
-      <div className="mx-3 mb-3 grid grid-cols-3 overflow-hidden rounded-2xl border border-champagne/25 bg-ink-950/95 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.7)] backdrop-blur-xl">
-        <a
-          href={waLink("Namaste, I would like a consultation.")}
-          target="_blank"
-          rel="noreferrer"
-          className="flex flex-col items-center gap-1.5 py-3 text-[10px] uppercase tracking-[0.26em] text-ivory-100/85"
-        >
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-gold-gradient text-ink-950">
-            <MessageCircle className="h-4 w-4" />
-          </span>
-          WhatsApp
-        </a>
-        <a
-          href={`tel:${BRAND.phone.replace(/\s/g, "")}`}
-          className="flex flex-col items-center gap-1.5 border-x border-champagne/15 py-3 text-[10px] uppercase tracking-[0.26em] text-ivory-100/85"
-        >
-          <span className="grid h-9 w-9 place-items-center rounded-full border border-champagne/40 text-champagne-soft">
-            <Phone className="h-4 w-4" />
-          </span>
+    <div
+      className="fixed bottom-0 left-0 right-0 z-50 flex md:hidden"
+      style={{
+        background: "rgba(253,251,247,0.97)",
+        backdropFilter: "blur(16px)",
+        borderTop: "1px solid rgba(176,141,74,0.15)",
+        boxShadow: "0 -8px 30px -10px rgba(26,22,18,0.12)"
+      }}
+    >
+      <a
+        href={`tel:${BRAND.phone.replace(/\s/g, "")}`}
+        className="flex flex-1 flex-col items-center justify-center gap-1 py-3.5 transition-opacity duration-200 active:opacity-70"
+        style={{ color: "var(--charcoal-600)" }}
+      >
+        <Phone className="h-5 w-5" />
+        <span className="text-[9px] uppercase" style={{ letterSpacing: "0.2em" }}>
           Call
-        </a>
-        <a
-          href="#enquiry"
-          className="flex flex-col items-center gap-1.5 py-3 text-[10px] uppercase tracking-[0.26em] text-ivory-100/85"
-        >
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-wine-600 text-ivory-50">
-            <Send className="h-4 w-4" />
-          </span>
-          Enquiry
-        </a>
-      </div>
+        </span>
+      </a>
+
+      <a
+        href="#catalogue"
+        className="flex flex-1 flex-col items-center justify-center gap-1 py-3.5"
+        style={{ color: "var(--charcoal-600)" }}
+      >
+        <Grid className="h-5 w-5" />
+        <span className="text-[9px] uppercase" style={{ letterSpacing: "0.2em" }}>
+          Catalogue
+        </span>
+      </a>
+
+      <a
+        href={waLink("Namaste! I would like to enquire about jewellery at Gaytri Gold.")}
+        target="_blank"
+        rel="noreferrer"
+        className="flex flex-1 flex-col items-center justify-center gap-1 py-3.5 rounded-none"
+        style={{
+          background: "linear-gradient(135deg, var(--gold-warm), var(--gold-accent))",
+          color: "var(--cream-50)"
+        }}
+      >
+        <MessageCircle className="h-5 w-5" />
+        <span className="text-[9px] uppercase font-medium" style={{ letterSpacing: "0.2em" }}>
+          WhatsApp
+        </span>
+      </a>
     </div>
   );
 }

@@ -1,86 +1,125 @@
 "use client";
 import { motion } from "framer-motion";
-import { SectionHeader } from "./Gemstones";
-import { GEMSTONES } from "@/lib/data";
-import SmartImage from "./SmartImage";
 
-const easing = [0.2, 0.8, 0.2, 1] as const;
+const ease = [0.16, 1, 0.3, 1] as const;
 
-const tiles = [
-  { title: "Navratna Display", caption: "Nine planetary stones", span: "md:col-span-2 md:row-span-2", gemIndex: 3 },
-  { title: "Kashmiri Neelam", caption: "Royal blue · rarest origin", span: "", gemIndex: 0 },
-  { title: "Burma Manik", caption: "Pigeon blood · vibrant red", span: "", gemIndex: 3 },
-  { title: "Colombian Panna", caption: "Velvet emerald green", span: "md:col-span-2", gemIndex: 2 },
-  { title: "Basra Moti", caption: "Lustrous natural pearl", span: "", gemIndex: 4 },
-  { title: "Certified Heera", caption: "Lab-verified clarity", span: "", gemIndex: 8 }
+const GALLERY_ITEMS = [
+  {
+    src: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=800&q=85",
+    alt: "Royal Kundan Necklace Set",
+    span: "col-span-2 row-span-2"
+  },
+  {
+    src: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&q=85",
+    alt: "Diamond Pendant Collection"
+  },
+  {
+    src: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=85",
+    alt: "Gold Bangles Set"
+  },
+  {
+    src: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=85",
+    alt: "Bridal Jewellery Complete Set",
+    span: "col-span-2"
+  },
+  {
+    src: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=85",
+    alt: "Silver Jewellery"
+  },
+  {
+    src: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=600&q=85",
+    alt: "Men's Gold Collection"
+  },
+  {
+    src: "https://images.unsplash.com/photo-1610375461246-83df859d849d?w=600&q=85",
+    alt: "Exclusive Jadau Jewellery"
+  }
 ];
 
 export default function Gallery() {
   return (
-    <section className="relative py-28 sm:py-32">
-      <div className="container-luxe">
-        <SectionHeader
-          eyebrow="The Showcase · चयनित संग्रह"
-          title={<>A Glimpse of the <span className="text-gold">Vault</span></>}
-          subtitle="Hand-selected pieces from our finest origins — every gem photographed from the heart of the collection."
-        />
+    <section
+      id="gallery"
+      className="relative overflow-hidden py-24 sm:py-32"
+      style={{ background: "var(--cream-200)" }}
+    >
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(50% 50% at 50% 0%, rgba(201,165,90,0.07), transparent 70%)"
+        }}
+      />
 
-        <div className="mt-16 grid auto-rows-[200px] grid-cols-2 gap-5 sm:auto-rows-[220px] md:grid-cols-4">
-          {tiles.map((t, i) => {
-            const g = GEMSTONES[t.gemIndex];
-            return (
-              <motion.div
-                key={t.title}
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.8, ease: easing, delay: (i % 4) * 0.08 }}
-                className={`group relative overflow-hidden rounded-2xl border border-champagne/15 ${t.span}`}
-                style={{
-                  background:
-                    "radial-gradient(140% 90% at 50% -10%, rgba(232,201,138,0.10), transparent 60%), linear-gradient(180deg, #15101e 0%, #0b0810 100%)"
-                }}
+      <div className="container-luxe relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease }}
+          className="mb-14 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6"
+        >
+          <div>
+            <div className="eyebrow mb-5">Gallery</div>
+            <h2
+              className="heading-display"
+              style={{ fontSize: "clamp(30px, 5vw, 52px)", letterSpacing: "-0.025em" }}
+            >
+              Crafted with{" "}
+              <span className="shimmer-text">Devotion</span>
+            </h2>
+          </div>
+          <p
+            className="max-w-sm text-[14px] leading-[1.8] sm:text-right"
+            style={{ fontWeight: 300, color: "var(--charcoal-500)" }}
+          >
+            Each piece in our collection is a testament to the living tradition of Rajasthani
+            jewellery artistry.
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease }}
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[180px]"
+        >
+          {GALLERY_ITEMS.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.97 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease, delay: i * 0.07 }}
+              className={`group relative overflow-hidden rounded-2xl ${item.span || ""}`}
+              style={{
+                border: "1px solid rgba(176,141,74,0.1)",
+                boxShadow: "0 10px 30px -15px rgba(26,22,18,0.12)"
+              }}
+            >
+              <img
+                src={item.src}
+                alt={item.alt}
+                crossOrigin="anonymous"
+                referrerPolicy="no-referrer"
+                loading="lazy"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div
+                className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 flex items-end p-4"
+                style={{ background: "linear-gradient(to top, rgba(26,20,16,0.7) 0%, transparent 60%)" }}
               >
-                {/* gem visual */}
-                <div className="absolute inset-0 grid place-items-center">
-                  <div
-                    className="aspect-square w-[55%] overflow-hidden rounded-full transition-transform duration-700 group-hover:scale-110"
-                    style={
-                      {
-                        ["--orb-a" as any]: g.orbA,
-                        ["--orb-b" as any]: g.orbB,
-                        ["--orb-glow" as any]: g.orbGlow
-                      } as React.CSSProperties
-                    }
-                  >
-                    <SmartImage
-                      src={g.photo}
-                      alt={g.name}
-                      className="h-full w-full object-cover"
-                      fallback={<div className="gem-orb h-full w-full" />}
-                    />
-                  </div>
-                </div>
-
-                {/* bottom gradient */}
-                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink-950/90 via-ink-950/40 to-transparent" />
-
-                {/* caption */}
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <div className="text-[10px] uppercase tracking-[0.3em] text-champagne/80">
-                    {t.caption}
-                  </div>
-                  <div className="mt-1 heading-display text-xl text-ivory-50">
-                    {t.title}
-                  </div>
-                </div>
-
-                {/* gold corner */}
-                <div className="absolute right-4 top-4 h-6 w-6 border-r border-t border-champagne/40 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              </motion.div>
-            );
-          })}
-        </div>
+                <span
+                  className="text-[11px] font-medium"
+                  style={{ color: "var(--cream-100)", letterSpacing: "0.06em" }}
+                >
+                  {item.alt}
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

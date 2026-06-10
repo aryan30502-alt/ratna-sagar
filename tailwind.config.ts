@@ -5,44 +5,60 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ivory: {
-          50: "#fdfbf6",
-          100: "#faf6ec",
-          200: "#f3ecdb",
-          300: "#e9dec3",
-          400: "#d9c8a0"
+        cream: {
+          50: "#fdfbf7",
+          100: "#faf6ef",
+          200: "#f5efe3",
+          300: "#ede5d4",
+          400: "#ddd3be"
         },
-        ink: {
-          950: "#0d0907",
-          900: "#1a120e",
-          800: "#241813",
-          700: "#3a2820",
-          600: "#5a4538"
+        charcoal: {
+          900: "#1a1612",
+          800: "#2a2420",
+          700: "#3d352e",
+          600: "#564d44",
+          500: "#6e6359"
         },
         gold: {
-          50: "#fff8e1",
-          100: "#fdecc4",
-          200: "#f0d48a",
-          300: "#dcb464",
-          400: "#c3953f",
-          500: "#a87528",
-          600: "#82581a",
-          700: "#5a3c10"
+          50: "#fdf8ed",
+          100: "#f8efd5",
+          200: "#f0dca8",
+          300: "#dfc682",
+          400: "#c9a55a",
+          500: "#b08d4a",
+          600: "#a68542",
+          700: "#8a6d30",
+          800: "#6b5425"
         },
         champagne: {
-          DEFAULT: "#e8c98a",
-          soft: "#f4e0a8",
-          deep: "#b9892f"
+          DEFAULT: "#c9a55a",
+          soft: "#dfc682",
+          deep: "#8a6d30"
         },
         wine: {
           50: "#fbeef0",
           100: "#f3cfd4",
-          400: "#a6293a",
-          500: "#841d2c",
-          600: "#6b1722",
+          400: "#9a3848",
+          500: "#7a2332",
+          600: "#5e1a26",
           700: "#4d101a",
           800: "#330a11",
           900: "#1f060a"
+        },
+        // Keep ivory/ink for compatibility but map to new palette
+        ivory: {
+          50: "#fdfbf7",
+          100: "#faf6ef",
+          200: "#f5efe3",
+          300: "#ede5d4",
+          400: "#ddd3be"
+        },
+        ink: {
+          950: "#1a1612",
+          900: "#2a2420",
+          800: "#3d352e",
+          700: "#564d44",
+          600: "#6e6359"
         }
       },
       fontFamily: {
@@ -52,16 +68,17 @@ const config: Config = {
       },
       backgroundImage: {
         "gold-gradient":
-          "linear-gradient(135deg,#f5d488 0%,#e8b85c 35%,#b8822a 70%,#f5d488 100%)",
+          "linear-gradient(135deg, #dfc682 0%, #c9a55a 35%, #8a6d30 70%, #c9a55a 100%)",
         "gold-soft":
-          "linear-gradient(135deg,#fdecc4 0%,#e8b85c 50%,#8a5e1c 100%)",
+          "linear-gradient(135deg, #f0dca8 0%, #c9a55a 50%, #6b5425 100%)",
         "radial-gold":
-          "radial-gradient(60% 60% at 50% 40%,rgba(232,184,92,0.18) 0%,rgba(7,5,6,0) 70%)"
+          "radial-gradient(60% 60% at 50% 40%, rgba(201,165,90,0.15) 0%, transparent 70%)"
       },
       boxShadow: {
-        gold: "0 10px 40px -10px rgba(232,184,92,0.35)",
-        glow: "0 0 60px -10px rgba(232,184,92,0.45)",
-        inset: "inset 0 1px 0 0 rgba(255,255,255,0.05)"
+        gold: "0 10px 40px -10px rgba(176,141,74,0.3)",
+        glow: "0 0 60px -10px rgba(176,141,74,0.35)",
+        inset: "inset 0 1px 0 0 rgba(255,255,255,0.7)",
+        warm: "0 25px 60px -20px rgba(26,22,18,0.08)"
       },
       keyframes: {
         shimmer: {

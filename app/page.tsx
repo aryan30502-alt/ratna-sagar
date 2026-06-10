@@ -1,10 +1,11 @@
+"use client";
+import { useState } from "react";
+import RateTicker from "@/components/RateTicker";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
 import CategoryChips from "@/components/CategoryChips";
-import Gemstones from "@/components/Gemstones";
-import Spiritual from "@/components/Spiritual";
-import GemstoneFinder from "@/components/GemstoneFinder";
+import Catalogue from "@/components/Catalogue";
 import WhyUs from "@/components/WhyUs";
 import Gallery from "@/components/Gallery";
 import Testimonials from "@/components/Testimonials";
@@ -15,15 +16,16 @@ import MobileBar from "@/components/MobileBar";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 
 export default function Page() {
+  const [activeCategory, setActiveCategory] = useState("Gold Jewellery");
+
   return (
     <main className="relative">
+      <RateTicker />
       <Navbar />
       <Hero />
       <Marquee />
-      <CategoryChips />
-      <Gemstones />
-      <Spiritual />
-      <GemstoneFinder />
+      <CategoryChips activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
+      <Catalogue activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
       <WhyUs />
       <Gallery />
       <Testimonials />
